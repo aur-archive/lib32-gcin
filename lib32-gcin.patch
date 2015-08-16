@@ -1,0 +1,51 @@
+diff -aur gcin-2.8.3-old/configure gcin-2.8.3-new/configure
+--- gcin-2.8.3-old/configure	2014-11-08 22:56:16.000000000 +0800
++++ gcin-2.8.3-new/configure	2015-01-30 20:53:08.448827242 +0800
+@@ -197,8 +197,8 @@
+ 
+ 
+ LIB='lib'
+-if [ -d /usr/lib64 -a -d /lib64 -a ! -d /lib/x86_64-linux-gnu ]; then
+-LIB='lib64'
++if [ -d /usr/lib32 -a -d /lib64 -a ! -d /lib/x86_64-linux-gnu ]; then
++LIB='lib32'
+ # for fedora 64bit
+ GTK_QUERY_IM_64='-64'
+ fi
+@@ -298,7 +298,7 @@
+   mv gcin.spec gcin.spec.tmp
+   grep -v qt3/plugins/inputmethods gcin.spec.tmp > gcin.spec
+ else
+-  for i in /usr/share/qt/bin/moc /usr/lib/qt/bin/moc /usr/lib64/qt/bin/moc /usr/lib/qt3/bin/moc /usr/share/qt3/bin/moc /usr/lib64/qt3/bin/moc
++  for i in /usr/share/qt/bin/moc /usr/lib/qt/bin/moc /usr/lib32/qt/bin/moc /usr/lib/qt3/bin/moc /usr/share/qt3/bin/moc /usr/lib64/qt3/bin/moc
+   do
+     [ ! -x $i ] && continue
+     QT_MOC=$i
+@@ -314,7 +314,7 @@
+   mv gcin.spec gcin.spec.tmp
+   grep -v qt4/plugins/inputmethods gcin.spec.tmp > gcin.spec
+ else
+-  for i in /usr/share/qt4/bin/moc /usr/lib/qt4/bin/moc /usr/lib64/qt4/bin/moc /usr/bin/moc
++  for i in /usr/share/qt4/bin/moc /usr/lib/qt4/bin/moc /usr/lib32/qt4/bin/moc /usr/bin/moc
+   do
+     [ ! -x $i ] && continue
+     QT4_MOC=$i
+@@ -345,7 +345,7 @@
+ 
+ OPTFLAGS="-g -O"
+ 
+-if [ -z $CC ]; then
++if [ -z "$CC" ]; then
+   CC=gcc
+ fi
+ 
+diff -aur gcin-2.8.3-old/qt4-im/Makefile gcin-2.8.3-new/qt4-im/Makefile
+--- gcin-2.8.3-old/qt4-im/Makefile	2012-03-05 20:26:54.000000000 +0800
++++ gcin-2.8.3-new/qt4-im/Makefile	2015-01-30 20:53:08.448827242 +0800
+@@ -1,5 +1,5 @@
+ include ../config.mak
+-QT=qt4
++QT=qt
+ QTIM=$(QT)/plugins/inputmethods
+ IMMODULES=$(libdir)/$(DEB_BUILD_MULTIARCH)/$(QTIM)
+ 
